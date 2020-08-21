@@ -1,0 +1,11 @@
+/home/oleg/Projects/SeedsMarket/obj/Debug/netcoreapp2.2/SeedsMarket.csprojAssemblyReference.cache
+/home/oleg/Projects/SeedsMarket/obj/Debug/netcoreapp2.2/SeedsMarket.csproj.CoreCompileInputs.cache
+/home/oleg/Projects/SeedsMarket/obj/Debug/netcoreapp2.2/SeedsMarket.AssemblyInfoInputs.cache
+/home/oleg/Projects/SeedsMarket/obj/Debug/netcoreapp2.2/SeedsMarket.AssemblyInfo.cs
+/home/oleg/Projects/SeedsMarket/bin/Debug/netcoreapp2.2/SeedsMarket.deps.json
+/home/oleg/Projects/SeedsMarket/bin/Debug/netcoreapp2.2/SeedsMarket.runtimeconfig.json
+/home/oleg/Projects/SeedsMarket/bin/Debug/netcoreapp2.2/SeedsMarket.runtimeconfig.dev.json
+/home/oleg/Projects/SeedsMarket/bin/Debug/netcoreapp2.2/SeedsMarket.dll
+/home/oleg/Projects/SeedsMarket/bin/Debug/netcoreapp2.2/SeedsMarket.pdb
+/home/oleg/Projects/SeedsMarket/obj/Debug/netcoreapp2.2/SeedsMarket.dll
+/home/oleg/Projects/SeedsMarket/obj/Debug/netcoreapp2.2/SeedsMarket.pdb
