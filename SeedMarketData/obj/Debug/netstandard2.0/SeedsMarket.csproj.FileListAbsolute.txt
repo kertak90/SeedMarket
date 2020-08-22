@@ -1,4 +1,0 @@
-/home/oleg/Projects/SeedsMarket/obj/Debug/netstandard2.0/SeedsMarket.csprojAssemblyReference.cache
-/home/oleg/Projects/SeedsMarket/obj/Debug/netstandard2.0/SeedsMarket.csproj.CoreCompileInputs.cache
-/home/oleg/Projects/SeedsMarket/obj/Debug/netstandard2.0/SeedsMarket.AssemblyInfoInputs.cache
-/home/oleg/Projects/SeedsMarket/obj/Debug/netstandard2.0/SeedsMarket.AssemblyInfo.cs
