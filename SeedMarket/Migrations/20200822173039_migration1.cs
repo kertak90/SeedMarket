@@ -1,13 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace SeedMarketData.Migrations
+namespace SeedMarket.Migrations
 {
     public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ApplicationRoles",
+                columns: table => new
+                {
+                    ApplicationRoleId = table.Column<Guid>(nullable: false),
+                    RoleName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationRoles", x => x.ApplicationRoleId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -48,23 +61,12 @@ namespace SeedMarketData.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductGroups",
-                columns: table => new
-                {
-                    ProductGroupBaseId = table.Column<Guid>(nullable: false),
-                    ProductGroupBaseName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductGroups", x => x.ProductGroupBaseId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Statuses",
                 columns: table => new
                 {
-                    StatusId = table.Column<Guid>(nullable: false),
-                    StatusName = table.Column<string>(nullable: true)
+                    StatusId = table.Column<short>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    StatusName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -182,21 +184,27 @@ namespace SeedMarketData.Migrations
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<Guid>(nullable: false),
-                    ApplicationUserName = table.Column<string>(nullable: true),
+                    ApplicationUserName = table.Column<string>(nullable: false),
                     ApplicationUserEmail = table.Column<string>(nullable: true),
-                    StatusId = table.Column<int>(nullable: true),
-                    StatusId1 = table.Column<Guid>(nullable: true),
-                    CreationDate = table.Column<DateTime>(nullable: false)
+                    StatusId = table.Column<short>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    ApplicationRoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApplicationUsers", x => x.ApplicationUserId);
                     table.ForeignKey(
-                        name: "FK_ApplicationUsers_Statuses_StatusId1",
-                        column: x => x.StatusId1,
+                        name: "FK_ApplicationUsers_ApplicationRoles_ApplicationRoleId",
+                        column: x => x.ApplicationRoleId,
+                        principalTable: "ApplicationRoles",
+                        principalColumn: "ApplicationRoleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUsers_Statuses_StatusId",
+                        column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,26 +212,50 @@ namespace SeedMarketData.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(nullable: false),
-                    ProductName = table.Column<string>(nullable: true),
+                    ProductName = table.Column<string>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
-                    StatusId = table.Column<int>(nullable: true),
-                    StatusId1 = table.Column<Guid>(nullable: true)
+                    StatusId = table.Column<short>(nullable: false),
+                    ProductPhotos = table.Column<List<string>>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Products_Statuses_StatusId1",
-                        column: x => x.StatusId1,
+                        name: "FK_Products_Statuses_StatusId",
+                        column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "StatusId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductGroups",
+                columns: table => new
+                {
+                    ProductGroupBaseId = table.Column<Guid>(nullable: false),
+                    ProductGroupBaseName = table.Column<string>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductGroups", x => x.ProductGroupBaseId);
+                    table.ForeignKey(
+                        name: "FK_ProductGroups_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUsers_StatusId1",
+                name: "IX_ApplicationUsers_ApplicationRoleId",
                 table: "ApplicationUsers",
-                column: "StatusId1");
+                column: "ApplicationRoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUsers_StatusId",
+                table: "ApplicationUsers",
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -263,9 +295,14 @@ namespace SeedMarketData.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_StatusId1",
+                name: "IX_ProductGroups_ProductId",
+                table: "ProductGroups",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_StatusId",
                 table: "Products",
-                column: "StatusId1");
+                column: "StatusId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -292,13 +329,16 @@ namespace SeedMarketData.Migrations
                 name: "ProductGroups");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "ApplicationRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Statuses");

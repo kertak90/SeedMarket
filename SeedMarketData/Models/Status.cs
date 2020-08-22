@@ -8,7 +8,7 @@ namespace SeedMarketData
     public class Status
     {
         [Key]
-        public Guid StatusId { get; set; }
+        public Int16 StatusId { get; set; }
         [Required]
         public String StatusName { get; set; }
         [JsonIgnore]

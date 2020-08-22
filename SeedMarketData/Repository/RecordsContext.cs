@@ -6,9 +6,8 @@ namespace SeedMarketData.Repository
     public class RecordsContext : IdentityDbContext
     {
         private readonly string _connectionString;
-        public RecordsContext(string connectionString) : base()
+        public RecordsContext() : base()
         {
-            _connectionString = connectionString;
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
@@ -18,7 +17,11 @@ namespace SeedMarketData.Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Server=localhost;Port=5432;Database=seed_market_db;User Id=test_user;Password=test_password
-            optionsBuilder.UseNpgsql(_connectionString);
+            // optionsBuilder.UseNpgsql(_connectionString);
+        }
+        public RecordsContext(DbContextOptions<RecordsContext> options) : base(options)
+        {
+            
         }
     }
 }

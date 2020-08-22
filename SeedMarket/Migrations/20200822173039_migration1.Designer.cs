@@ -3,16 +3,18 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SeedMarketData.Repository;
 
-namespace SeedMarketData.Migrations
+namespace SeedMarket.Migrations
 {
     [DbContext(typeof(RecordsContext))]
-    partial class RecordsContextModelSnapshot : ModelSnapshot
+    [Migration("20200822173039_migration1")]
+    partial class migration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,16 +206,13 @@ namespace SeedMarketData.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
-                    b.Property<int?>("StatusId")
-                        .IsRequired();
-
-                    b.Property<Guid?>("StatusId1");
+                    b.Property<short>("StatusId");
 
                     b.HasKey("ApplicationUserId");
 
                     b.HasIndex("ApplicationRoleId");
 
-                    b.HasIndex("StatusId1");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("ApplicationUsers");
                 });
@@ -230,14 +229,12 @@ namespace SeedMarketData.Migrations
 
                     b.Property<List<string>>("ProductPhotos");
 
-                    b.Property<int?>("StatusId")
+                    b.Property<short?>("StatusId")
                         .IsRequired();
-
-                    b.Property<Guid?>("StatusId1");
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("StatusId1");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Products");
                 });
@@ -261,7 +258,7 @@ namespace SeedMarketData.Migrations
 
             modelBuilder.Entity("SeedMarketData.Status", b =>
                 {
-                    b.Property<Guid>("StatusId")
+                    b.Property<short>("StatusId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("StatusName")
@@ -326,14 +323,16 @@ namespace SeedMarketData.Migrations
 
                     b.HasOne("SeedMarketData.Status", "Status")
                         .WithMany("ApplicationUser")
-                        .HasForeignKey("StatusId1");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SeedMarketData.Product", b =>
                 {
                     b.HasOne("SeedMarketData.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId1");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SeedMarketData.ProductGroup", b =>

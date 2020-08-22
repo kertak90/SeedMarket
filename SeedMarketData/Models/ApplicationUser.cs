@@ -13,7 +13,7 @@ namespace SeedMarketData
         public String ApplicationUserName { get; set; }
         public String ApplicationUserEmail { get; set; }
         [Required]
-        public Int32? StatusId { get; set; }
+        public Int16 StatusId { get; set; }
         [JsonIgnore]
         public Status Status { get; set; }
         [Required]

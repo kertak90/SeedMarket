@@ -18,7 +18,7 @@ namespace SeedMarketData
         public Product Product { get; set; }
         public String DeliveryAdress { get; set; }
         public DateTime PurshaseDate { get; set; }
-        public Guid StatusId { get; set; }
+        public Int16 StatusId { get; set; }
         [JsonIgnore]
         public Status Status { get; set; }
     }

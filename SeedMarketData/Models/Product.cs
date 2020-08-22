@@ -14,7 +14,7 @@ namespace SeedMarketData
         [Required]
         public DateTime ExpirationDate { get; set; }
         [Required]
-        public Int32? StatusId { get; set; }
+        public Int16? StatusId { get; set; }
         [JsonIgnore]
         public Status Status { get; set; }
         [JsonIgnore]
