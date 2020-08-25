@@ -5,50 +5,45 @@ using System.Threading.Tasks;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Linq;
 using Newtonsoft.Json;
+using SeedMarket.Services;
 
 namespace SeedMarketData
 {
     [ApiController]
-    [Route("main/[controller]")]
+    [Route("api/[controller]")]
     public class MainController : Controller
     {
         private readonly RecordsContext _context;
-        public MainController(RecordsContext context)
+        private readonly MainControllerService _mainControllerService;
+        public MainController(RecordsContext context,
+            MainControllerService mainControllerService)
         {
             _context = context;
+            _mainControllerService = mainControllerService;
         }
+
         [HttpGet("[action]")]
         [SwaggerOperation(Summary = "Get all products", Description = "Get all products")]
-        public async Task GetProducts()
-        {
-            System.Console.WriteLine($"PrepareDB Method runned");
-            System.Console.WriteLine($"done");
-        }
+        public async Task<string> GetProducts() => 
+            await _mainControllerService.GetProducts();
 
         [HttpGet("Statuses")]
-        public async Task<string> GetStatusess()
-        {
-            var statuses = _context.Statuses.ToList();
-            return JsonConvert.SerializeObject(statuses);
-        }
+        public async Task<string> GetStatusess() => 
+            await _mainControllerService.GetStatusess();
+
         [HttpPost("[action]")]
         [SwaggerOperation(Summary = "Post new product group")]
-        public async Task AddNewProductGroup()
-        {
-            System.Console.WriteLine($"PrepareDB Method runned");
-            System.Console.WriteLine($"done");
-        }
+        public async Task<IActionResult> AddNewProductGroup(ProductGroup newProductGroup) => 
+            await _mainControllerService.AddNewProductGroup(newProductGroup);
+
         [HttpPost("[action]")]
         [SwaggerOperation(Summary = "Add new products")]
-        public async Task AddNewProduct()
-        {
+        public async Task AddNewProduct(Product product) =>
+            await _mainControllerService.AddNewProduct(product);
 
-        }
         [HttpPost("[action]")]
         [SwaggerOperation(Summary = "Add new user")]
-        public async Task AddNewUser()
-        {
-
-        }
+        public async Task AddNewUser(ApplicationUser applicationUser) =>
+            await _mainControllerService.AddNewUser(applicationUser);
     }
 }

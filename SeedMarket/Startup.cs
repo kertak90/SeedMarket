@@ -13,6 +13,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using SeedMarket.Services;
 
 namespace SeedMarket
 {
@@ -40,12 +41,16 @@ namespace SeedMarket
                     c.EnableAnnotations();
                     c.SwaggerDoc("v1", new OpenApiInfo
                     {
-                        Title = "MainApi",
+                        Title = "Api",
                         Description = "SeedMarketApi",
                         Version = "v1"
                     });
                 });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //API Services
+            services.AddScoped<MainControllerService>();
+            services.AddScoped<AlgorithmsTasksSolvingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,12 +58,12 @@ namespace SeedMarket
         {
             app.UseSwagger(c =>
             {
-                c.RouteTemplate = "main/swagger/{documentName}/swagger.json";
+                c.RouteTemplate = "api/swagger/{documentName}/swagger.json";
             });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "Sample API");
-                c.RoutePrefix = "main/swagger";
+                c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Sample API");
+                c.RoutePrefix = "api/swagger";
             });
             app.UseAuthentication();
             app.UseMvc();
