@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 using SeedMarketData.Repository;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace SeedMarket.Services
 {
@@ -83,6 +85,87 @@ namespace SeedMarket.Services
             }
 
             result += $"result = {k}";
+            return await Task.FromResult<string>(result);
+        }
+        public async Task<string> Task1_1_6(int a = 3, int b = 5)
+        {
+            string result = "";
+            result += $"a = {a}, b = {b}\n";
+            int k = 0;
+
+            while(k < b)
+            {
+                k = k + 1;
+                a = a + 1;
+            }           
+
+            result += $"result = {a}";
+            return await Task.FromResult<string>(result);
+        }
+        public async Task<string> Task1_1_7(int a = 5, int b = 3)
+        {
+            string result = "";
+            result += $"a = {a}, b = {b}\n";
+            int k = 0;
+
+            int q = 0, r = a;
+            if(!(a >= 0 && b > 0))
+                return result += "a или b не удовлетворяют условиям";
+            
+            while(r >= b)
+            {
+                r = r - b;
+                q++;
+            }
+
+            result += $"q = {q}, r = {r}";
+            return await Task.FromResult<string>(result);
+        }
+        public async Task<string> Task1_1_8(int n = 5)
+        {
+            string result = "";
+            result += $"n = {n}\n";
+            int k = n;
+
+            while(n > 1)
+            {
+                k = k * (n - 1);
+                n--;
+            }
+
+            result += $"n! = {k}";
+            return await Task.FromResult<string>(result);
+        }
+        public async Task<string> Task1_1_9(int n = 5)
+        {
+            string result = "";
+            result += $"n = {n}\n";
+            int A0 = 0, A1 = 1;
+
+            if(n < 2)
+                return result += "n not condition";
+
+            int k = 1, Ak = 0;
+            while(k<n)
+            {
+                Ak = A0 + A1;                
+                A0 = A1;
+                A1 = Ak;
+                k++;
+            }
+
+            result += $"fibonachi An = {Ak}";
+            return await Task.FromResult<string>(result);
+        }
+        public async Task<string> Task1_1_10(int n = 5)
+        {
+            string result = "";
+            result += $"n = {n}\n";
+            int Ak = 0;
+
+            
+
+            result += $"fibonachi An = {Ak}";
             return await Task.FromResult<string>(result);
         }
     }
