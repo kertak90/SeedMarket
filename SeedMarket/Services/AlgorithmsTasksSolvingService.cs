@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using SeedMarketData.Repository;
 using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace SeedMarket.Services
 {
@@ -161,10 +160,24 @@ namespace SeedMarket.Services
         {
             string result = "";
             result += $"n = {n}\n";
-            int Ak = 0;
+            double Ak = 0;
 
-            
+            double[,] m = 
+                {
+                    {1, 1},
+                    {1, 0}
+                };
 
+            var M = Matrix<double>.Build.DenseOfArray(m);
+            var M2 = M;
+
+            while(n>2)
+            {
+                n--;
+                M2 = M2.Multiply(M);
+            }
+            Ak = M2[0,0];
+            System.Console.WriteLine($"M2:\n {M2.ToString()}");
             result += $"fibonachi An = {Ak}";
             return await Task.FromResult<string>(result);
         }

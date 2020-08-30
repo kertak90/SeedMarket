@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SeedMarket.Middleware;
 using SeedMarket.Services;
 using SeedMarketData.Repository;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SeedMarket
 {
+    [ControllerExceptionFilter]
     [Controller]
 
     [Route("algorithms/[controller]")]
@@ -48,7 +50,6 @@ namespace SeedMarket
             await _algorithmsTasksSolvingService.Task1_1_4(a, n);
 
         [HttpPost("[action]")]
-
         [SwaggerOperation(Description = "1.1.5 Даны натуральные числа a, b. Вычислите произведение a * b"
             + "используя в программе лишь операции +, -, =, !=")]
         public async Task<string> Task1_1_5(int a, int b) => 
@@ -76,5 +77,10 @@ namespace SeedMarket
             + "A1 = 1, Ak = Ak-1 + Ak-2 при k >= 2. Дано n, вычислите An")]
         public async Task<string> Task1_1_9(int n) =>
             await _algorithmsTasksSolvingService.Task1_1_9(n);
+
+        [HttpPost("[action]")]
+        [SwaggerOperation(Description = "1.1.10 Последовательность фибоначи. Определить An пропорционально log n")]
+        public async Task<string> Task1_1_10(int n) =>
+            await _algorithmsTasksSolvingService.Task1_1_10(n);
     }
 }

@@ -6,9 +6,11 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Linq;
 using Newtonsoft.Json;
 using SeedMarket.Services;
+using SeedMarket.Middleware;
 
 namespace SeedMarketData
 {
+    [ControllerExceptionFilter]
     [ApiController]
     [Route("api/[controller]")]
     public class MainController : Controller
