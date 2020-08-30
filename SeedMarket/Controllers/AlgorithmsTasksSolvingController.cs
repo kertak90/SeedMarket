@@ -82,5 +82,10 @@ namespace SeedMarket
         [SwaggerOperation(Description = "1.1.10 Последовательность фибоначи. Определить An пропорционально log n")]
         public async Task<string> Task1_1_10(int n) =>
             await _algorithmsTasksSolvingService.Task1_1_10(n);
+
+        [HttpPost("[action]")]
+        [SwaggerOperation(Description = "1.1.11 Дано натуральное число n, вычислите 1/0! + 1/1! + ... + 1/n!")]
+        public async Task<string> Task1_1_11(int n) =>
+            await _algorithmsTasksSolvingService.Task1_1_11(n);
     }
 }

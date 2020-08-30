@@ -181,5 +181,33 @@ namespace SeedMarket.Services
             result += $"fibonachi An = {Ak}";
             return await Task.FromResult<string>(result);
         }
+        public async Task<string> Task1_1_11(int n = 5)
+        {
+            string result = "";
+            result += $"n = {n}\n";
+            double res = 0;
+            for(int i = 0; i <= n; i++)
+            {
+                double[,] m = 
+                    {
+                        {1, 1},
+                        {1, 0}
+                    };
+
+                var M = Matrix<double>.Build.DenseOfArray(m);
+                var M2 = M;
+
+                var j = i;
+                while(j>2)
+                {
+                    j--;
+                    M2 = M2.Multiply(M);
+                }
+                res += 1/M2[0,0];
+            }
+            
+            result += $"fibonachi res = {res}";
+            return await Task.FromResult<string>(result);
+        }
     }
 }
