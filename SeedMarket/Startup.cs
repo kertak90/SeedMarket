@@ -52,7 +52,6 @@ namespace SeedMarket
 
             //API Services
             services.AddScoped<MainControllerService>();
-            services.AddScoped<AlgorithmsTasksSolvingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
